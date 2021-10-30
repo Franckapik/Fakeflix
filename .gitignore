@@ -26,3 +26,5 @@ firebase-debug.log*
 .prettierrc
 .idea
 .env
+
+/public/series
