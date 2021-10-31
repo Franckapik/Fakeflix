@@ -66,6 +66,15 @@ const DetailModal = () => {
 
   //tv/{tv_id}/season/{season_number}/episode/{episode_number}
 
+  function compare(a, b) {
+    if (a.episode_number < b.episode_number) {
+      return -1;
+    }
+    if (a.episode_number > b.episode_number) {
+      return 1;
+    }
+    return 0;
+  }
   useEffect(() => {
     if (episodes) {
       const arr = [];
@@ -85,7 +94,7 @@ const DetailModal = () => {
             console.log(err.message);
           });
       });
-      Promise.all(prom).then((data) => setEpisode(arr));
+      Promise.all(prom).then((data) => setEpisode(arr.sort(compare)));
     }
   }, [episodes]); //promises could be used with all return elements ? Or map is returning something?
 
