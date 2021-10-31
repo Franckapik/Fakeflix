@@ -3,7 +3,7 @@ import { useEffect, useRef } from "react";
 import { useHistory } from "react-router-dom";
 import { TADUM_SOUND_URL } from "../../requests";
 
-const PlayAnimation = () => {
+const PlayAnimation = (url) => {
   let history = useHistory();
   const soundRef = useRef(null);
   const handleTadum = () => {
@@ -14,7 +14,7 @@ const PlayAnimation = () => {
   useEffect(() => {
     handleTadum();
     setTimeout(() => {
-      history.push("/browse");
+      history.push("/playStart&src=coucou");
     }, 4200);
   }, [history]);
 
