@@ -104,10 +104,6 @@ const Local = () => {
                */
             }
           })}
-
-        {[...new Set(LocalList)].map((a, i) => {
-          return <li key={i}>{a.id}</li>;
-        })}
       </motion.div>
       <Credits />
     </motion.div>
