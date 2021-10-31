@@ -70,11 +70,7 @@
 		"prettier": "^2.2.1",
 		"redux-devtools-extension": "^2.13.9"
 	},
-	"husky": {
-		"hooks": {
-			"pre-commit": "lint-staged"
-		}
-	},
+
 	"lint-staged": {
 		"*.+(js|jsx)": "eslint --cache --fix",
 		"*.+(json|css|md)": "prettier --write"

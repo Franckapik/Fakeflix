@@ -9,14 +9,23 @@ import { defaultPageFadeInVariants, staggerHalf } from "../../motionUtils";
 import requests from "../../requests";
 import "./local.scss";
 
-const groupSeries = (array) => {
-  return array.reduce((r, v, i, a) => {
-    if (v === a[i - 1]) {
-      r[r.length - 1].push(v);
+var groupBy = function (xs, key) {
+  return xs.reduce(function (rv, x) {
+    (rv[x[key]] = rv[x[key]] || []).push(x);
+    return rv;
+  }, {});
+};
+
+const groupByArray = (xs, key) => {
+  return xs.reduce(function (rv, x) {
+    let v = key instanceof Function ? key(x) : x[key];
+    let el = rv.find((r) => r && r.key === v);
+    if (el) {
+      el.values.push(x);
     } else {
-      r.push(v === a[i + 1] ? [v] : v);
+      rv.push({ key: v, values: [x] });
     }
-    return r;
+    return rv;
   }, []);
 };
 
@@ -27,17 +36,19 @@ const Local = () => {
   console.log(LocalList);
 
   useEffect(() => {
+    console.log(groupByArray(LocalList, "id"));
+  }, [LocalList]);
+
+  useEffect(() => {
     if (data && data.length) {
       const arr = [];
       const prom = data.map((a) => {
         return axios
           .get(`${requests.fetchSearchQuery}${a.title}`)
           .then((response) => {
-            if (arr.some((e) => e.id === response.data.results[0].id)) {
-              //do nothing
-            } else {
-              return arr.push(response.data.results[0]);
-            }
+            const media = { ...response.data.results[0], ...a };
+            console.log(media);
+            return arr.push(media);
           })
           .catch((err) => {
             console.log(err.message);
@@ -67,8 +78,31 @@ const Local = () => {
         )}
         {LocalList &&
           LocalList.length &&
-          LocalList.map((a) => {
-            return <Poster key={a.id} item={a} {...a} />;
+          groupByArray(LocalList, "id").map((a) => {
+            console.log(a);
+            if (a.values.length > 1) {
+              console.log("gros");
+              //Poster for series to set
+              return (
+                <Poster
+                  key={a.key}
+                  item={a.values[0]}
+                  {...a.values[0]}
+                  episodes={a.values}
+                />
+              );
+            } else {
+              return (
+                <Poster
+                  key={a.key}
+                  item={a.values[0]}
+                  {...a.values[0]}
+                  episodes={false}
+                />
+              );
+              /*               return <Poster key={a.id} item={a} {...a} />;
+               */
+            }
           })}
 
         {[...new Set(LocalList)].map((a, i) => {
