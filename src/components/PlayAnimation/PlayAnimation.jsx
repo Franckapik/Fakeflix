@@ -14,7 +14,7 @@ const PlayAnimation = (url) => {
   useEffect(() => {
     handleTadum();
     setTimeout(() => {
-      history.push("/playStart&src=coucou");
+      history.push("/playStart");
     }, 4200);
   }, [history]);
 

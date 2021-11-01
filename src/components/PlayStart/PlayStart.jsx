@@ -3,25 +3,17 @@ import { useEffect, useRef } from "react";
 import { useHistory } from "react-router-dom";
 import { TADUM_SOUND_URL } from "../../requests";
 import ReactPlayer from "react-player";
+import { useSelector } from "react-redux";
+import { selectPlayUrl } from "../../redux/play/play.selectors";
 
 // Render a YouTube video player
 
 const PlayStart = () => {
-  let history = useHistory();
-  const soundRef = useRef(null);
-  const handleTadum = () => {
-    soundRef.current.currentTime = 0;
-    soundRef.current.play();
-  };
-
+  const media = useSelector(selectPlayUrl);
+  console.log(media);
   return (
     <div>
-      <ReactPlayer
-        url="https://www.youtube.com/watch?v=ysz5S6PUM-U"
-        playing
-        controls
-        width="100%"
-      />
+      <ReactPlayer url={media} playing controls={true} width="100%" />
     </div>
   );
 };

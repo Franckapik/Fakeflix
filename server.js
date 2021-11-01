@@ -19,7 +19,8 @@ app.get("/save", (req, res) => {
       files.forEach((file) => {
         const name = file.replace(/^.*[\\\/]/, "");
         const objFile = { ...ptn(name) };
-        objFile.src = file;
+        objFile.src = file.substr(file.indexOf("/") + 1);
+        console.log(objFile.src);
         listObjFiles.push(objFile);
       });
 

@@ -11,6 +11,7 @@ import {
   removeFromFavourites,
 } from "../../redux/favourites/favourites.actions";
 import { Link } from "react-router-dom";
+import { playThisUrl } from "../../redux/play/play.actions";
 
 const Poster = (result) => {
   const {
@@ -64,6 +65,8 @@ const Poster = (result) => {
 
   const handlePlayAction = (event) => {
     event.stopPropagation();
+    console.log(item.src);
+    dispatch(playThisUrl(item.src));
   };
 
   return (
