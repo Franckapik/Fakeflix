@@ -5,6 +5,10 @@ var glob = require("glob");
 const fs = require("fs");
 var ptn = require("parse-torrent-name");
 
+const TorrentSearchApi = require("torrent-search-api");
+
+TorrentSearchApi.enableProvider("Rarbg");
+
 /* const OS = require("opensubtitles-api");
 const OpenSubtitles = new OS({
   useragent: "UserAgent",
@@ -53,6 +57,12 @@ app.get("/read", (req, res) => {
     console.log(parsed);
     res.json(parsed);
   });
+});
+
+app.get("/torrentSearch", async (req, res) => {
+  console.log(req.query.title);
+  const torrents = await TorrentSearchApi.search(req.query.title, "Movies", 20);
+  res.json(torrents);
 });
 
 app.listen(port, () => {

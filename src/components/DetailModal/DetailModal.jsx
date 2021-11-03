@@ -203,7 +203,7 @@ const DetailModal = () => {
                   {overview}
                 </motion.p>
                 <br></br>
-                {episodeState ? (
+                {episodes && episodeState ? (
                   <>
                     <motion.h4
                       variants={modalFadeInUpVariants}
