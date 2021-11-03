@@ -1,30 +1,32 @@
-import "./detailModal.scss";
+import axios from "axios";
+import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
+import { FaMinus, FaPlay, FaPlus } from "react-icons/fa";
+import { VscChromeClose } from "react-icons/vsc";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { motion, AnimatePresence } from "framer-motion";
+import useOutsideClick from "../../hooks/useOutsideClick";
 import {
-  staggerOne,
+  modalFadeInUpVariants,
   modalOverlayVariants,
   modalVariants,
-  modalFadeInUpVariants,
+  staggerOne,
 } from "../../motionUtils";
+import {
+  addToFavourites,
+  removeFromFavourites,
+} from "../../redux/favourites/favourites.actions";
 import { hideModalDetail } from "../../redux/modal/modal.actions";
-import { useDispatch, useSelector } from "react-redux";
 import {
   selectModalContent,
   selectModalState,
 } from "../../redux/modal/modal.selectors";
 import { BASE_IMG_URL, FALLBACK_IMG_URL } from "../../requests";
-import { VscChromeClose } from "react-icons/vsc";
 import { capitalizeFirstLetter, dateToYearOnly } from "../../utils";
-import { FaMinus, FaPlay, FaPlus } from "react-icons/fa";
-import {
-  addToFavourites,
-  removeFromFavourites,
-} from "../../redux/favourites/favourites.actions";
-import useOutsideClick from "../../hooks/useOutsideClick";
-import axios from "axios";
-import Poster from "../Poster/Poster";
+import "./detailModal.scss";
+import "../Poster/poster.scss";
+import { playThisUrl } from "../../redux/play/play.actions";
+
 const { REACT_APP_API_KEY } = process.env;
 export const LANG = "fr-FR";
 
@@ -107,6 +109,13 @@ const DetailModal = () => {
     event.stopPropagation();
     handleModalClose();
   };
+
+  const handlePlayAction = (src) => {
+    console.log(src);
+    if (!modalClosed) handleModalClose();
+    dispatch(playThisUrl(src));
+  };
+
   useOutsideClick(modalRef, () => {
     if (!modalClosed) handleModalClose();
   });
@@ -208,45 +217,50 @@ const DetailModal = () => {
                     />
                     <>
                       {episodeState.map((a, i) => (
-                        <div
+                        <Link
                           key={i}
-                          style={{
-                            display: "flex",
-                            alignItems: "center",
-                            paddingBottom: "20px",
-                            paddingTop: "10px",
-                            marginBottom: "10px",
-                            borderBottom: "1px solid grey",
-                          }}
+                          style={{ textDecoration: "none", color: "#f2f2f2" }}
+                          onClick={() => handlePlayAction(a.src)}
+                          to={"/play"}
                         >
-                          <span
+                          <div
+                            key={i}
                             style={{
-                              marginRight: "20px",
-                              fontSize: "2em",
-                              color: "grey",
+                              display: "flex",
+                              alignItems: "center",
+                              paddingBottom: "20px",
+                              paddingTop: "10px",
+                              marginBottom: "10px",
+                              borderBottom: "1px solid grey",
                             }}
                           >
-                            {a.episode_number}
-                          </span>
-                          {/*                           <Poster key={i} item={a} {...a} />
-                           */}{" "}
-                          <img
-                            style={{ width: "150px", marginRight: "20px" }}
-                            src={
-                              "https://image.tmdb.org/t/p/original" +
-                              a.still_path
-                            }
-                          />
-                          <div>
-                            <motion.h4
-                              variants={modalFadeInUpVariants}
-                              className="Modal__info--otherTitle"
+                            <span
+                              style={{
+                                marginRight: "20px",
+                                fontSize: "2em",
+                                color: "grey",
+                              }}
                             >
-                              {a.name}
-                            </motion.h4>
-                            <p style={{ fontSize: "0.8em" }}>{a.overview}</p>
+                              {a.episode_number}
+                            </span>
+                            <img
+                              style={{ width: "150px", marginRight: "20px" }}
+                              src={
+                                "https://image.tmdb.org/t/p/original" +
+                                a.still_path
+                              }
+                            />
+                            <div>
+                              <motion.h4
+                                variants={modalFadeInUpVariants}
+                                className="Modal__info--otherTitle"
+                              >
+                                {a.name}
+                              </motion.h4>
+                              <p style={{ fontSize: "0.8em" }}>{a.overview}</p>
+                            </div>
                           </div>
-                        </div>
+                        </Link>
                       ))}
                     </>
                   </>
