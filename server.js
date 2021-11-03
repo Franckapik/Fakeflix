@@ -5,6 +5,14 @@ var glob = require("glob");
 const fs = require("fs");
 var ptn = require("parse-torrent-name");
 
+/* const OS = require("opensubtitles-api");
+const OpenSubtitles = new OS({
+  useragent: "UserAgent",
+  username: "franckapik",
+  password: "Fanch/448g7doh3k",
+  ssl: true,
+}); */
+
 app.get("/save", (req, res) => {
   glob("*.?(mkv|mp4|m4v)", { matchBase: true }, (err, files) => {
     var listObjFiles = [];
