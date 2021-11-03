@@ -6,7 +6,7 @@ const fs = require("fs");
 var ptn = require("parse-torrent-name");
 
 app.get("/save", (req, res) => {
-  glob("*.?(mkv|mp4)", { matchBase: true }, (err, files) => {
+  glob("*.?(mkv|mp4|m4v)", { matchBase: true }, (err, files) => {
     var listObjFiles = [];
 
     if (err) {
