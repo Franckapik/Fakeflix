@@ -46,9 +46,10 @@ const Local = () => {
         return axios
           .get(`${requests.fetchSearchQuery}${a.title}`)
           .then((response) => {
-            const media = { ...response.data.results[0], ...a };
-            console.log(media);
-            return arr.push(media);
+            if (response.data.results.length > 0) {
+              const media = { ...response.data.results[0], ...a };
+              return arr.push(media);
+            }
           })
           .catch((err) => {
             console.log(err.message);
