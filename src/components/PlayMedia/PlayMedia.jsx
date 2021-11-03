@@ -1,14 +1,11 @@
-import "./playStart.scss";
-import { useEffect, useRef } from "react";
-import { useHistory } from "react-router-dom";
-import { TADUM_SOUND_URL } from "../../requests";
 import ReactPlayer from "react-player";
 import { useSelector } from "react-redux";
 import { selectPlayUrl } from "../../redux/play/play.selectors";
+import "./PlayMedia.scss";
 
 // Render a YouTube video player
 
-const PlayStart = () => {
+const PlayMedia = () => {
   const media = useSelector(selectPlayUrl);
   console.log(media);
   return (
@@ -18,4 +15,4 @@ const PlayStart = () => {
   );
 };
 
-export default PlayStart;
+export default PlayMedia;

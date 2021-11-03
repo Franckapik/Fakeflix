@@ -18,7 +18,7 @@ import { selectCurrentUser } from "./redux/auth/auth.selectors";
 import { selectSearchResults } from "./redux/search/search.selectors";
 import { checkUserSession } from "./redux/auth/auth.actions";
 import Local from "./pages/Local/Local";
-import PlayStart from "./components/PlayStart/PlayStart";
+import PlayMedia from "./components/PlayMedia/PlayMedia";
 
 const App = () => {
   const currentUser = useSelector(selectCurrentUser);
@@ -45,7 +45,7 @@ const App = () => {
           </Route>
           <Route path="/splash" component={SplashAnimation} />
           <Route path="/play" component={PlayAnimation} />
-          <Route path="/playStart" component={PlayStart} />
+          <Route path="/playStart" component={PlayMedia} />
           <Route
             path="/search"
             render={() =>

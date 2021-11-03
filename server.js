@@ -37,19 +37,6 @@ app.get("/save", (req, res) => {
   });
 });
 
-app.get("/rename", (req, res) => {
-  glob("./public/series/**/*.mkv", (err, files) => {
-    if (err) {
-      console.log(err);
-    } else {
-      files.forEach((file) => {
-        console.log(ptn(file));
-      });
-    }
-  });
-  res.send("Renamed");
-});
-
 app.get("/read", (req, res) => {
   fs.readFile("users.json", (err, data) => {
     // Catch this!
