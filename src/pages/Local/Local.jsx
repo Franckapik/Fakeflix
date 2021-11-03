@@ -80,10 +80,8 @@ const Local = () => {
         {LocalList &&
           LocalList.length &&
           groupByArray(LocalList, "id").map((a) => {
-            console.log(a);
             if (a.values.length > 1) {
-              console.log("gros");
-              //Poster for series to set
+              //Series
               return (
                 <Poster
                   key={a.key}
@@ -93,6 +91,7 @@ const Local = () => {
                 />
               );
             } else {
+              //Movie
               return (
                 <Poster
                   key={a.key}
@@ -101,8 +100,6 @@ const Local = () => {
                   episodes={false}
                 />
               );
-              /*               return <Poster key={a.id} item={a} {...a} />;
-               */
             }
           })}
       </motion.div>

@@ -64,8 +64,6 @@ const DetailModal = () => {
 
   const [episodeState, setEpisode] = useState([]);
 
-  //tv/{tv_id}/season/{season_number}/episode/{episode_number}
-
   function compare(a, b) {
     if (a.episode_number < b.episode_number) {
       return -1;
@@ -79,7 +77,6 @@ const DetailModal = () => {
     if (episodes) {
       const arr = [];
       const prom = episodes.map((a) => {
-        console.log(a);
         return axios
           .get(
             `https://api.themoviedb.org/3/tv/${a.id}/season/${a.season}/episode/${a.episode}?api_key=${REACT_APP_API_KEY}&language=${LANG}&sort_by=air_date`
@@ -87,7 +84,6 @@ const DetailModal = () => {
           .then((response) => {
             const episodeInfo = { ...response.data };
             episodeInfo.src = a.src;
-            console.log(response);
             return arr.push(episodeInfo);
           })
           .catch((err) => {
@@ -96,7 +92,7 @@ const DetailModal = () => {
       });
       Promise.all(prom).then((data) => setEpisode(arr.sort(compare)));
     }
-  }, [episodes]); //promises could be used with all return elements ? Or map is returning something?
+  }, [episodes]);
 
   const handleAdd = (event) => {
     event.stopPropagation();
