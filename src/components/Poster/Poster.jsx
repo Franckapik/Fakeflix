@@ -2,7 +2,13 @@ import "./poster.scss";
 import { motion } from "framer-motion";
 import { posterFadeInVariants } from "../../motionUtils";
 import { BASE_IMG_URL, FALLBACK_IMG_URL } from "../../requests";
-import { FaChevronDown, FaMinus, FaPlay, FaPlus } from "react-icons/fa";
+import {
+  FaChevronDown,
+  FaDownload,
+  FaMinus,
+  FaPlay,
+  FaPlus,
+} from "react-icons/fa";
 import useGenreConversion from "../../hooks/useGenreConversion";
 import { showModalDetail } from "../../redux/modal/modal.actions";
 import { useDispatch } from "react-redux";
@@ -27,6 +33,7 @@ const Poster = (result) => {
     isFavourite,
     episodes,
   } = result;
+
   let fallbackTitle = title || original_title || name || original_name;
   const genresConverted = useGenreConversion(genre_ids);
   const dispatch = useDispatch();

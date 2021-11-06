@@ -98,6 +98,7 @@ const Local = () => {
                   item={a.values[0]}
                   {...a.values[0]}
                   episodes={false}
+                  isLocal={true}
                 />
               );
             }
