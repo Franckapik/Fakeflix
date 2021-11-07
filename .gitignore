@@ -29,4 +29,5 @@ firebase-debug.log*
 
 /public/series
 *.mp4
+*.avi
 *.torrent

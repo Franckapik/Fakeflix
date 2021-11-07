@@ -8,6 +8,9 @@ var ptn = require("parse-torrent-name");
 const TorrentSearchApi = require("torrent-search-api");
 
 TorrentSearchApi.enableProvider('Torrent9');
+var Client = require('node-torrent');
+var client = new Client({logLevel: 'DEBUG'});
+
 /* TorrentSearchApi.enableProvider('Torrent9');
 TorrentSearchApi.enableProvider('ThePirateBay');
  */
@@ -69,6 +72,17 @@ app.get("/torrentSearch", async (req, res) => {
   
     TorrentSearchApi.downloadTorrent(data[0], __dirname + `/public/torrents/${data[0].title}.torrent`).then(success => {
       console.log('downloaded');
+      var torrent = client.addTorrent(__dirname + `/public/torrents/${data[0].title}.torrent`);
+      torrent.on('complete', function() {
+        console.log('complete!');
+        torrent.files.forEach(function(file) {
+            var newPath = '/new/path/' + file.path;
+            fs.rename(file.path, newPath);
+            // while still seeding need to make sure file.path points to the right place
+            file.path = newPath;
+        });
+    });
+
   } ) 
   
   })
