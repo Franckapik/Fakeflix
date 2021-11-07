@@ -7,8 +7,10 @@ var ptn = require("parse-torrent-name");
 
 const TorrentSearchApi = require("torrent-search-api");
 
-TorrentSearchApi.enableProvider("Rarbg");
-
+TorrentSearchApi.enableProvider('Torrent9');
+/* TorrentSearchApi.enableProvider('Torrent9');
+TorrentSearchApi.enableProvider('ThePirateBay');
+ */
 /* const OS = require("opensubtitles-api");
 const OpenSubtitles = new OS({
   useragent: "UserAgent",
@@ -60,10 +62,19 @@ app.get("/read", (req, res) => {
 });
 
 app.get("/torrentSearch", async (req, res) => {
-  console.log(req.query.title);
-  const torrents = await TorrentSearchApi.search(req.query.title, "Movies", 20);
-  res.json(torrents);
-});
+  console.log(req.query.title, req.query.category);
+  TorrentSearchApi
+  .search(req.query.title, 'Movies', 20)
+  .then(data => {res.json(data)
+  
+    TorrentSearchApi.downloadTorrent(data[0], __dirname + `/public/torrents/${data[0].title}.torrent`).then(success => {
+      console.log('downloaded');
+  } ) 
+  
+  })
+
+
+ });
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);

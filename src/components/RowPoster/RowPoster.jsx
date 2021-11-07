@@ -82,13 +82,9 @@ const RowPoster = (result) => {
           >
             <FaPlay />
           </Link>
-          <Link
-            className="Poster__info--icon icon--play"
-            onClick={handlePlayAction}
-            to={"/play"}
-          >
-            <FaDownload />
-          </Link>
+          <button className="Row__poster-info--icon icon--toggleModal">
+            <FaDownload onClick={handleModalOpening} />
+          </button>
           {!isFavourite ? (
             <button
               className="Row__poster-info--icon icon--favourite"

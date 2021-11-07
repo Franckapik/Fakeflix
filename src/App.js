@@ -3,8 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { Route, Switch, Redirect, useLocation } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
 import Navbar from "./components/Navbar/Navbar";
-/* import Homepage from "./pages/Homepage/Homepage";
- */ import Movies from "./pages/Movies/Movies";
+ import Homepage from "./pages/Homepage/Homepage";
+  import Movies from "./pages/Movies/Movies";
 import TVSeries from "./pages/TVSeries/TVSeries";
 import Popular from "./pages/Popular/Popular";
 import MyList from "./pages/MyList/MyList";
@@ -59,11 +59,11 @@ const App = () => {
           <Route
             exact
             path="/browse"
-            render={() => (currentUser ? <Local /> : <Redirect to="/login" />)}
-
-            /*             render={() =>
+/*             render={() => (currentUser ? <Local /> : <Redirect to="/login" />)}
+ */
+                         render={() =>
               currentUser ? <Homepage /> : <Redirect to="/login" />
-            } */
+            } 
           />
           <Route
             exact

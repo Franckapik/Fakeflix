@@ -30,6 +30,35 @@ import { playThisUrl } from "../../redux/play/play.actions";
 const { REACT_APP_API_KEY } = process.env;
 export const LANG = "fr-FR";
 
+const TorrentList = ({ title }) => {
+  const [torrents, setTorrents] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get(`/torrentSearch?title=${title}&category=Movie`)
+      .then((res) => {
+        if (res.data.length) {
+          setTorrents(res.data);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, [title]);
+
+  return (
+    <div>
+      {torrents.length ? (
+        <ul>
+          {torrents && torrents.map((a, i) => <li key={i}>{a.title}</li>)}
+        </ul>
+      ) : (
+        "Pas de torrents"
+      )}
+    </div>
+  );
+};
+
 const DetailModal = () => {
   const dispatch = useDispatch();
   const modalClosed = useSelector(selectModalState);
@@ -323,6 +352,7 @@ const DetailModal = () => {
                     {maturityRating}
                   </span>
                 </motion.div>
+                <TorrentList title={fallbackTitle}></TorrentList>
               </motion.div>
             </motion.div>
           </motion.div>
